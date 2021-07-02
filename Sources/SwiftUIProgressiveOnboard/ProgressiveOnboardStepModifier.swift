@@ -15,7 +15,7 @@ public struct ProgressiveOnboardStepModifier: ViewModifier {
     public var nextClosure: ProgressiveOnboard.ProgressClosure? = nil
     public var previousClosure: ProgressiveOnboard.ProgressClosure? = nil
     
-    public init(using onboard: ObservedObject<ProgressiveOnboard>, at stepIndex: Int, nextClosure: ProgressiveOnboard.ProgressClosure? = nil, previousClosure: ProgressiveOnboard.ProgressClosure? = nil) {
+    public init(using onboard: ProgressiveOnboard, at stepIndex: Int, nextClosure: ProgressiveOnboard.ProgressClosure? = nil, previousClosure: ProgressiveOnboard.ProgressClosure? = nil) {
         self._onboard = onboard
         self.stepIndex = stepIndex
         self.nextClosure = nextClosure
