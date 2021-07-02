@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProgressiveOnboardStepModifier: ViewModifier {
+public struct ProgressiveOnboardStepModifier: ViewModifier {
     
     @ObservedObject public var onboard: ProgressiveOnboard
     public var stepIndex: Int
