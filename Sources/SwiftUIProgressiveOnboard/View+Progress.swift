@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-extension View {
-    public func setProgressiveOnboardStep(using onboard: Binding<ProgressiveOnboard>, at stepIndex: Int, nextClosure: ProgressiveOnboard.ProgressClosure? = nil, previousClosure: ProgressiveOnboard.ProgressClosure? = nil) -> some View {
+public extension View {
+    func setProgressiveOnboardStep(using onboard: Binding<ProgressiveOnboard>, at stepIndex: Int, nextClosure: ProgressiveOnboard.ProgressClosure? = nil, previousClosure: ProgressiveOnboard.ProgressClosure? = nil) -> some View {
         return self
             .background(ProgressiveOnboardGeometry(withRect: onboard.filterViews[stepIndex]))
             .onAppear {
