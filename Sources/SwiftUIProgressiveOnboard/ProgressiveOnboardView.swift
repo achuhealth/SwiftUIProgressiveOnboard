@@ -8,12 +8,15 @@
 import SwiftUI
 
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
-public struct ProgressiveOnboardView: View {
+public struct ProgressiveOnboardView<StepView: View>: View {
     
     @ObservedObject public var onboard: ProgressiveOnboard
     
-    public init(withProgressiveOnboard: ProgressiveOnboard) {
-        self.onboard = withProgressiveOnboard
+    let stepView: StepView
+    
+    public init(withProgressiveOnboard onboard: ProgressiveOnboard, @ViewBuilder stepView: () -> StepView) {
+        self.onboard = onboard
+        self.stepView = stepView()
     }
     
     public var body: some View {
@@ -28,8 +31,16 @@ public struct ProgressiveOnboardView: View {
                     .animation(.easeInOut(duration: onboard.animateDuration))
             )
         
+        .position(x: onboard.positionX, y: onboard.positionYFixed())
+        .animation(Animation.easeInOut(duration: onboard.animateDuration).delay(0.25))
+    }
+}
+
+struct DefaultProgressiveOnboardStepView: View {
+    @ObservedObject public var onboard: ProgressiveOnboard
+    
+    var body: some View {
         HStack {
-            
             VStack {
                 Text(onboard.description)
                     .padding(10)
@@ -77,13 +88,21 @@ public struct ProgressiveOnboardView: View {
             .cornerRadius(10)
             .padding(10)
         }
-        .position(x: onboard.positionX, y: onboard.positionYFixed())
-        .animation(Animation.easeInOut(duration: onboard.animateDuration).delay(0.25))
     }
 }
 
+
+struct ProgressiveOnboardViewPreview: View {
+    @StateObject var onboard = ProgressiveOnboard(withJson: "")
+    
+    var body: some View {
+        ProgressiveOnboardView(withProgressiveOnboard: onboard) {
+            DefaultProgressiveOnboardStepView(onboard: onboard)
+        }
+    }
+}
 struct ProgressiveOnboardView_Previews: PreviewProvider {
     static var previews: some View {
-        ProgressiveOnboardView(withProgressiveOnboard: .init(withJson: ""))
+        ProgressiveOnboardViewPreview()
     }
 }

@@ -9,26 +9,45 @@ import SwiftUI
 
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public class ProgressiveOnboard: ObservableObject {
+    public typealias ProgressClosure = (@escaping () -> Void) -> Void
+    
     @Published public var showOnboardScreen = false
-    @Published private var activeIndex = 0
+    @Published public var activeIndex = 0
     
     internal var animateDuration: Double = 0.5
     
     internal var onboardItems = [OnboardItem]()
     public var filterViews = [CGRect]()
     
-    public init(withJson: String) {
-        setup(withJson: withJson)
+    public var nextClosures = [Int: ProgressClosure]()
+    public var previousClosures = [Int: ProgressClosure]()
+    
+    public init(withJson json: String, animateDuration: Double? = nil) {
+        setup(withJson: json)
+        if let animateDuration = animateDuration {
+            self.animateDuration = animateDuration
+        }
     }
     
-    public init(withJson: String, animateDuration: Double) {
-        setup(withJson: withJson)
-        self.animateDuration = animateDuration
+    public init(withItems onboardItems: [OnboardItem], animateDuration: Double? = nil, nextClosures: [Int: ProgressClosure] = [:], previousClosures: [Int: ProgressClosure] = [:]) {
+        setup(withItems: onboardItems)
+        
+        if let animateDuration = animateDuration {
+            self.animateDuration = animateDuration
+        }
+        
+        self.nextClosures = nextClosures
+        self.previousClosures = previousClosures
     }
     
-    private func setup(withJson: String) {
+    private func setup(withItems onboardItems: [OnboardItem]) {
+        self.onboardItems = onboardItems
+        filterViews = onboardItems.map { _ in CGRect() }
+    }
+    
+    private func setup(withJson json: String) {
         do {
-            let data = withJson.data(using: .utf8)
+            let data = json.data(using: .utf8)
             let decoder = JSONDecoder()
             onboardItems = try decoder.decode([OnboardItem].self, from: data!)
             
@@ -41,18 +60,45 @@ public class ProgressiveOnboard: ObservableObject {
     }
     
     internal func handlePrevious() {
+        var newIndex = activeIndex
         if activeIndex > 0 {
-            activeIndex -= 1
+            newIndex -= 1
+        }
+        
+        if let closure = previousClosures[newIndex] {
+            closure { [self] in
+                activeIndex = newIndex
+            }
+        } else {
+            activeIndex = newIndex
         }
     }
     
     internal func handleNext() {
+        var newIndex = activeIndex
+        var endScreens = false
+        
         if activeIndex+1 == onboardItems.count {
             // End onboard screens
-            activeIndex = 0
-            self.showOnboardScreen = false
+            newIndex = 0
+            endScreens = true
         } else {
-            activeIndex += 1
+            newIndex += 1
+        }
+        
+        let setIndex = { [self] in
+            activeIndex = newIndex
+            if endScreens {
+                showOnboardScreen = false
+            }
+        }
+        
+        if let closure = nextClosures[newIndex] {
+            closure {
+                setIndex()
+            }
+        } else {
+            setIndex()
         }
     }
     

@@ -11,8 +11,8 @@ import SwiftUI
 public struct ProgressiveOnboardGeometry: View {
     @Binding public var rect: CGRect
     
-    public init(withRect: Binding<CGRect>) {
-        self._rect = withRect
+    public init(withRect rect: Binding<CGRect>) {
+        self._rect = rect
     }
     
     public var body: some View {
