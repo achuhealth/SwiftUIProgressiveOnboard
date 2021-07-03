@@ -15,7 +15,7 @@ public struct OnboardItem: Codable {
     public var nextButtonTitle: String
     public var previousButtonTitle: String
     
-    public init(title: String, description: String, imageName: String?, previousButtonTitle: String, nextButtonTitle: String) {
+    public init(title: String = "", description: String, imageName: String? = nil, previousButtonTitle: String, nextButtonTitle: String) {
         self.title = title
         self.description = description
         self.imageName = imageName
