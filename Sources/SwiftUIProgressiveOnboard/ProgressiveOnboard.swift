@@ -106,15 +106,23 @@ public class ProgressiveOnboard: ObservableObject {
         return filterViews[activeIndex]
     }
     
-    internal var description: String {
+    public var title: String {
+        return onboardItems[activeIndex].title
+    }
+    
+    public var description: String {
         return onboardItems[activeIndex].description
     }
     
-    internal var nextButtonTitle: String {
+    public var imageName: String? {
+        return onboardItems[activeIndex].imageName
+    }
+    
+    public var nextButtonTitle: String {
         return onboardItems[activeIndex].nextButtonTitle
     }
     
-    internal var previousButtonTitle: String {
+    public var previousButtonTitle: String {
         return onboardItems[activeIndex].previousButtonTitle
     }
     
