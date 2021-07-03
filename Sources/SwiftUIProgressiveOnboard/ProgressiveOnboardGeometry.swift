@@ -11,15 +11,18 @@ import SwiftUI
 public struct ProgressiveOnboardGeometry: View {
     @Binding public var rect: CGRect
     
-    public init(withRect rect: Binding<CGRect>) {
+    var coordinateSpace: CoordinateSpace
+    
+    public init(withRect rect: Binding<CGRect>, in coordinateSpace: CoordinateSpace = .named("OnboardSpace")) {
         self._rect = rect
+        self.coordinateSpace = coordinateSpace
     }
     
     public var body: some View {
         GeometryReader { geometry in
             Group { () -> AnyView in
                 DispatchQueue.main.async {
-                    self.rect = geometry.frame(in: .named("OnboardSpace"))
+                    self.rect = geometry.frame(in: coordinateSpace)
                 }
 
                 return AnyView(Color.clear)
