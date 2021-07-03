@@ -101,7 +101,7 @@ struct ProgressiveOnboardViewPreview: View {
     
     var body: some View {
         ProgressiveOnboardView(withProgressiveOnboard: onboard) {
-            DefaultProgressiveOnboardStepView(onboard: onboard)
+            DefaultProgressiveOnboardStepView(using: onboard)
         }
     }
 }
