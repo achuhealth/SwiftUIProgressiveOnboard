@@ -36,7 +36,7 @@ public struct ProgressiveOnboardView<StepView: View>: View {
     }
 }
 
-struct DefaultProgressiveOnboardStepView: View {
+public struct DefaultProgressiveOnboardStepView: View {
     @ObservedObject public var onboard: ProgressiveOnboard
     
     var body: some View {
