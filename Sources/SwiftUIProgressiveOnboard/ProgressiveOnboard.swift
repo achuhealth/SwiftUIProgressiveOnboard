@@ -59,7 +59,7 @@ public class ProgressiveOnboard: ObservableObject {
         }
     }
     
-    internal func handlePrevious() {
+    public func handlePrevious() {
         var newIndex = activeIndex
         if activeIndex > 0 {
             newIndex -= 1
@@ -74,7 +74,7 @@ public class ProgressiveOnboard: ObservableObject {
         }
     }
     
-    internal func handleNext() {
+    public func handleNext() {
         var newIndex = activeIndex
         var endScreens = false
         
