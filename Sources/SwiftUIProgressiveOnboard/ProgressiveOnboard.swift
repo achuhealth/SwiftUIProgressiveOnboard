@@ -139,7 +139,7 @@ public class ProgressiveOnboard: ObservableObject {
     }
     
     internal func positionYFixed() -> CGFloat {
-        let fixedHeight: CGFloat = 200.0
+        let fixedHeight: CGFloat = 300.0
         if filterView.maxY + fixedHeight > UIScreen.main.bounds.size.height {
             return filterView.minY - fixedHeight/2
         } else {
