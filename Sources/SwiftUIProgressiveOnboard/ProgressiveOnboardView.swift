@@ -30,9 +30,9 @@ public struct ProgressiveOnboardView<StepView: View>: View {
                     .position(x: onboard.filterView.midX, y: onboard.filterView.midY)
                     .animation(.easeInOut(duration: onboard.animateDuration))
             )
-        
-        .position(x: onboard.positionX, y: onboard.positionYFixed())
-        .animation(Animation.easeInOut(duration: onboard.animateDuration).delay(0.25))
+        stepView
+            .position(x: onboard.positionX, y: onboard.positionYFixed())
+            .animation(Animation.easeInOut(duration: onboard.animateDuration).delay(0.25))
     }
 }
 
