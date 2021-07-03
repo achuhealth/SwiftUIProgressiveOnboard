@@ -42,7 +42,7 @@ public class ProgressiveOnboard: ObservableObject {
     
     private func setup(withItems onboardItems: [OnboardItem]) {
         self.onboardItems = onboardItems
-        filterViews = onboardItems.map { _ in CGRect() }
+        filterViews = onboardItems.map { _ in CGRect(x: 0, y: UIScreen.main.bounds.midY, width: 0, height: 0) }
     }
     
     private func setup(withJson json: String) {
