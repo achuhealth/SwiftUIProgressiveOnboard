@@ -42,7 +42,7 @@ public struct ProgressiveOnboardStepModifier: ViewModifier {
 }
 
 public extension View {
-    func setOnboardStep(using onboard: ProgressiveOnboard, at stepIndex: Int, coordinateSpace: CoordinateSpace = .named("OnboardSpace"), nextClosure: ProgressiveOnboard.ProgressClosure? = nil, previousClosure: ProgressiveOnboard.ProgressClosure? = nil) -> some View {
+    func setOnboardStep(using onboard: ProgressiveOnboard, at stepIndex: Int, in coordinateSpace: CoordinateSpace = .named("OnboardSpace"), nextClosure: ProgressiveOnboard.ProgressClosure? = nil, previousClosure: ProgressiveOnboard.ProgressClosure? = nil) -> some View {
         return self
             .modifier(ProgressiveOnboardStepModifier(using: onboard, at: stepIndex, in: coordinateSpace, nextClosure: nextClosure, previousClosure: previousClosure))
     }
