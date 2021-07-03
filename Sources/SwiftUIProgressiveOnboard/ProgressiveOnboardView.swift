@@ -39,7 +39,11 @@ public struct ProgressiveOnboardView<StepView: View>: View {
 public struct DefaultProgressiveOnboardStepView: View {
     @ObservedObject public var onboard: ProgressiveOnboard
     
-    var body: some View {
+    public init(using onboard: ProgressiveOnboard) {
+        self.onboard = onboard
+    }
+    
+    public var body: some View {
         HStack {
             VStack {
                 Text(onboard.description)
