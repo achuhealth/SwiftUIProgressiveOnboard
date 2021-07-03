@@ -16,13 +16,13 @@ public struct ProgressiveOnboardStepModifier: ViewModifier {
     public var previousClosure: ProgressiveOnboard.ProgressClosure? = nil
     
     public init(using onboard: ProgressiveOnboard, at stepIndex: Int, nextClosure: ProgressiveOnboard.ProgressClosure? = nil, previousClosure: ProgressiveOnboard.ProgressClosure? = nil) {
-        self._onboard = onboard
+        self.onboard = onboard
         self.stepIndex = stepIndex
         self.nextClosure = nextClosure
         self.previousClosure = previousClosure
     }
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .background(ProgressiveOnboardGeometry(withRect: $onboard.filterViews[stepIndex]))
             .onAppear {
@@ -35,5 +35,12 @@ public struct ProgressiveOnboardStepModifier: ViewModifier {
                     }
                 }
             }
+    }
+}
+
+public extension View {
+    func setOnboardStep(using onboard: ProgressiveOnboard, at stepIndex: Int, nextClosure: ProgressiveOnboard.ProgressClosure? = nil, previousClosure: ProgressiveOnboard.ProgressClosure? = nil) -> some View {
+        return self
+            .modifier(ProgressiveOnboardStepModifier(using: onboard, at: stepIndex, nextClosure: nextClosure, previousClosure: previousClosure))
     }
 }
